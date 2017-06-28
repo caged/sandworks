@@ -15,7 +15,6 @@ here = path.abspath(path.dirname(__file__))
 
 install_reqs = parse_requirements('requirements.txt', session=pip.download.PipSession())
 reqs = [str(ir.req) for ir in install_reqs]
-
 setup(
     name='splineworks',
     version='0.1.0',
@@ -46,6 +45,10 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=reqs,
+
+    # dependency_links=[
+    #     ''
+    # ],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,

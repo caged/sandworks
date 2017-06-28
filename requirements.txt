@@ -1,0 +1,2 @@
+cython==0.25.0
+-e git+ssh://git@github.com/inconvergent/fast-sand-paint.git#egg=fast-sand-paint-0.1.0
