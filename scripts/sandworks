@@ -2,8 +2,8 @@
 
 import argparse
 import importlib
-import splineworks
-from splineworks.generators import playground
+import sandworks
+from sandworks.generators import playground
 
 parser = argparse.ArgumentParser(description='Generate some cool spline art')
 
@@ -15,13 +15,13 @@ subparsers = parser.add_subparsers(
 playground_parser = subparsers.add_parser('playground')
 playground_parser.add_argument(
     '-s', '--size',
-    default=1400,
+    default=1500,
     type=int,
     help='pixel size of width/height')
 
 args = parser.parse_args()
 
-generator_name = "splineworks.generators.{}".format(args.generator)
+generator_name = "sandworks.generators.{}".format(args.generator)
 
 try:
     Generator = getattr(importlib.import_module(generator_name), 'Generator')

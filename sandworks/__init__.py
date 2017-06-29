@@ -1,5 +1,5 @@
 """
-Splineworks generative artwork
+Sandworks generative artwork
 """
 
 from .lib import helpers

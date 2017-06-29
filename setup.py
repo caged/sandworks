@@ -16,10 +16,10 @@ here = path.abspath(path.dirname(__file__))
 install_reqs = parse_requirements('requirements.txt', session=pip.download.PipSession())
 reqs = [str(ir.req) for ir in install_reqs]
 setup(
-    name='splineworks',
+    name='sandworks',
     version='0.1.0',
-    description='Sand spline art',
-    url='https://github.com/caged/splineworks',
+    description='Sand art',
+    url='https://github.com/caged/sandworks',
     author='Justin Palmer',
     author_email='justin@labratrevenge.com',
     license='MIT',
@@ -33,12 +33,12 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='splines art datavisualization visualization',
+    keywords='sand art datavisualization visualization',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=['splineworks'],
-    scripts=["scripts/splineworks"],
+    packages=['sandworks'],
+    scripts=["scripts/sandworks"],
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's

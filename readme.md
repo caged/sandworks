@@ -5,8 +5,8 @@ It doesn't appear pip can install from git urls via setup.py, and `--process-dep
 deprecated, so you have to install this package by hand.
 
 ```
-git clone https://github.com/Caged/splineworks.git
-cd splineworks
+git clone https://github.com/Caged/sandworks.git
+cd sandworks
 pip install cython==0.25.0
 pip install -r requirements.txt
 pip install .
