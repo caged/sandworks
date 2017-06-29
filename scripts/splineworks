@@ -3,19 +3,21 @@
 import argparse
 import importlib
 import splineworks
-from splineworks.generators import horizontal_line
+from splineworks.generators import playground
 
 parser = argparse.ArgumentParser(description='Generate some cool spline art')
-parser.add_argument('-w', '--width', default=1400, type=int, help='pixel size of art width')
-parser.add_argument('-y', '--height', default=1400, type=int, help='pixel size of art height')
 
 subparsers = parser.add_subparsers(
     dest='generator',
     title='Generators',
     description='Types of generator subcommands')
 
-horizontal_line_parser = subparsers.add_parser('horizontal_line')
-horizontal_line_parser.add_argument('-n', '--number', default=10, type=int, help='Number of lines')
+playground_parser = subparsers.add_parser('playground')
+playground_parser.add_argument(
+    '-s', '--size',
+    default=1400,
+    type=int,
+    help='pixel size of width/height')
 
 args = parser.parse_args()
 

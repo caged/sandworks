@@ -12,3 +12,6 @@ __pycache__/
 .installed.cfg
 *.egg
 src
+
+# Output
+*.png
