@@ -1,4 +1,4 @@
-Spine artwork.
+Sand artwork.
 
 ### Installation
 It doesn't appear pip can install from git urls via setup.py, and `--process-dependency-links` is
