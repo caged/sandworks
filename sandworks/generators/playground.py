@@ -14,15 +14,15 @@ from sand import Sand
 
 class Generator:
     def __init__(self, args):
-        count = 10000
-        sand = Sand(args.size)
-        sand.set_bg([1, 1, 1, 1])
-        sand.set_rgba([
-            189 / 255,
-            67 / 255,
-            67 / 255,
-            0.2
-        ])
+        count = args.count
+
+        # Convert colors to RGB decimal
+        sand_color = [v / 255 for v in list(bytes.fromhex(args.color))]
+        bg_color = [v / 255 for v in list(bytes.fromhex(args.bg_color))]
+
+        # Set alpha
+        sand_color.append(0.1)
+        bg_color.append(1)
 
         distributions = [
             'random',
@@ -51,6 +51,11 @@ class Generator:
         for group in group_a:
             for distribution in distributions:
                 print('Generating {} with {} distribution'.format(group, distribution))
+
+                sand = Sand(args.size)
+                sand.set_bg(bg_color)
+                sand.set_rgba(sand_color)
+
                 method = getattr(numpy.random, distribution)
                 aa = method((count, 2))
                 bb = method((count, 2))
@@ -61,6 +66,11 @@ class Generator:
         for group in group_b:
             for distribution in distributions:
                 print('Generating {} with {} distribution'.format(group, distribution))
+
+                sand = Sand(args.size)
+                sand.set_bg(bg_color)
+                sand.set_rgba(sand_color)
+
                 method = getattr(numpy.random, distribution)
                 aa = method((count, 2))
                 bb = method(count)
@@ -71,6 +81,11 @@ class Generator:
         for group in group_c:
             for distribution in distributions:
                 print('Generating {} with {} distribution'.format(group, distribution))
+
+                sand = Sand(args.size)
+                sand.set_bg(bg_color)
+                sand.set_rgba(sand_color)
+
                 method = getattr(numpy.random, distribution)
                 aa = method((count * 100, 2))
                 getattr(sand, group)(aa)
@@ -79,6 +94,11 @@ class Generator:
         for group in group_d:
             for distribution in distributions:
                 print('Generating {} with {} distribution'.format(group, distribution))
+
+                sand = Sand(args.size)
+                sand.set_bg(bg_color)
+                sand.set_rgba(sand_color)
+
                 method = getattr(numpy.random, distribution)
                 aa = method((count, 2))
                 bb = method((count, 2))
