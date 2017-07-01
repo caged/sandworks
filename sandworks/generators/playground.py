@@ -10,6 +10,7 @@ from numpy.random import standard_exponential, standard_cauchy, standard_normal
 from numpy.random import randint
 
 from sand import Sand
+from ..lib.color import hex_to_rgb_decimal
 
 
 class Generator:
@@ -17,8 +18,8 @@ class Generator:
         count = args.count
 
         # Convert colors to RGB decimal
-        sand_color = [v / 255 for v in list(bytes.fromhex(args.color))]
-        bg_color = [v / 255 for v in list(bytes.fromhex(args.bg_color))]
+        sand_color = hex_to_rgb_decimal(args.color)
+        bg_color = hex_to_rgb_decimal(args.bg_color)
 
         # Set alpha
         sand_color.append(0.1)
