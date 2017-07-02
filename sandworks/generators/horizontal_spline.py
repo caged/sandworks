@@ -71,25 +71,3 @@ def generate(args):
             if not j % (save_frame * line_count):
                 sand.write_to_png('tmp/frame-{}.png'.format(j), gamma)
             j += 1
-
-    # the_iterator = spline_iterator()
-    # while True:
-    #     try:
-    #         itt, xy
-    #     except Exception as e:
-    #         raise
-  # while True:
-  #   try:
-  #     itt, xy = next(si)
-  #     sand.paint_dots(xy)
-  #     if not itt%(500*GRID_Y):
-  #       sand.write_to_png(fn.name(), GAMMA)
-  #   except Exception as e:
-  #     sand.write_to_png(fn.name(), GAMMA)
-  #     traceback.print_exc(file=sys.stdout)
-  #     itt = 0
-  # while True:
-  #   for s in splines:
-  #     xy = next(s)
-  #     itt += 1
-  #     yield itt, xy
