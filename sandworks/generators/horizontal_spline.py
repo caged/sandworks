@@ -9,7 +9,7 @@ from time import time
 
 from sand import Sand
 from ..lib.sand_spline import SandSpline
-from ..lib.color import hex_to_rgb_decimal
+from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
 
 
 def guide_iterator(x, y):
@@ -21,9 +21,16 @@ def generate(args):
     # Number of lines
     line_count = args.lines
 
-    # Margin as a percent of total canvas size
-    margin = 0.01
+    xscale = SimpleLinearScale(domain=array([0, args.width]), range=array([0, 1]))
+    yscale = SimpleLinearScale(domain=array([0, args.height]), range=array([0, 1]))
 
+    # Margin as a pixel value of total size.  Convert that margin to a number between 0..1
+    # representing the percentage of total pixel size
+    margin = 50
+    margin_x = xscale(margin)
+    margin_y = yscale(margin)
+
+    # Output PNG gamma
     gamma = 1.5
 
     # What frame to write out
@@ -51,12 +58,12 @@ def generate(args):
     splines = []
 
     # For each y column
-    for index, ypos in enumerate(linspace(margin, 1.0 - margin, line_count)):
+    for index, ypos in enumerate(linspace(margin_y, 1.0 - margin_y, line_count)):
         # TODO: 4?  Not sure what purpose this number serves.
         pnum = 4 + index
         guide = guide_iterator(0.5, ypos)
 
-        x = linspace(-1, 1.0, pnum) * (1.0 - 2 * margin) * 0.5
+        x = linspace(-1, 1.0, pnum) * (1.0 - 2 * margin_x) * 0.5
         y = zeros(pnum, 'float')
         path = column_stack([x, y])
         scale = arange(pnum).astype('float') * step

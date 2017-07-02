@@ -4,6 +4,17 @@ from numpy.random import random
 from numpy import linspace
 from numpy import column_stack
 from numpy import sort
+from numpy import interp
+
+class SimpleLinearScale:
+    def __init__(self, domain, range):
+        self.domain = domain
+        self.range = range
+
+    def __call__(self, value):
+        return interp(value, self.domain, self.range)
+
+
 def hex_to_rgb_decimal(hex):
     return [v / 255 for v in list(bytes.fromhex(hex))]
 
