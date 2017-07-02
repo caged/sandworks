@@ -50,10 +50,21 @@ for sub_parser in sub_parsers:
         type=lambda d: d.replace('#', ''),
         help='Color of background')
     sub_parser.add_argument(
-        '--size',
+        '--width',
         default=1500,
         type=int,
-        help='pixel size of width/height')
+        help='pixel size of width')
+    sub_parser.add_argument(
+        '--height',
+        default=1500,
+        type=int,
+        help='pixel size of height')
+    sub_parser.add_argument(
+        '--frame-prefix',
+        default='timestamp',
+        type=str,
+        choices=('timestamp', 'frame'),
+        help='pixel size of height')
 
 args = parser.parse_args()
 generator_name = "sandworks.generators.{}".format(args.generator)

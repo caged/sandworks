@@ -43,7 +43,7 @@ def generate(args):
     sand_color.append(0.001)
     bg_color.append(1)
 
-    sand = Sand(args.size)
+    sand = Sand(args.width, args.height)
     sand.set_rgba(sand_color)
     sand.set_bg(bg_color)
 
