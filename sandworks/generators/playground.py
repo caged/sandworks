@@ -10,7 +10,7 @@ from numpy.random import standard_exponential, standard_cauchy, standard_normal
 from numpy.random import randint
 
 from sand import Sand
-from ..lib.color import hex_to_rgb_decimal
+from ..lib.helpers import hex_to_rgb_decimal
 
 
 def generate(args):

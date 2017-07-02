@@ -4,6 +4,8 @@ from numpy.random import random
 from numpy import linspace
 from numpy import column_stack
 from numpy import sort
+def hex_to_rgb_decimal(hex):
+    return [v / 255 for v in list(bytes.fromhex(hex))]
 
 
 def _interpolate(xy, num_points):
