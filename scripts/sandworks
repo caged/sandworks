@@ -38,6 +38,12 @@ horizontal_spline_parser.add_argument(
     type=int,
     help='Number of drawing iterations before writing a frame to PNG')
 
+horizontal_spline_parser.add_argument(
+    '--margin',
+    default=100,
+    type=int,
+    help='Margin around borders of artwork canvas')
+
 for sub_parser in sub_parsers:
     sub_parser.add_argument(
         '--color',

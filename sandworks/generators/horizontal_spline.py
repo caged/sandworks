@@ -26,7 +26,7 @@ def generate(args):
 
     # Margin as a pixel value of total size.  Convert that margin to a number between 0..1
     # representing the percentage of total pixel size
-    margin = 50
+    margin = args.margin
     margin_x = xscale(margin)
     margin_y = yscale(margin)
 
