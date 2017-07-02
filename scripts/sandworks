@@ -32,6 +32,12 @@ horizontal_spline_parser.add_argument(
     type=int,
     help='number of lines to draw')
 
+horizontal_spline_parser.add_argument(
+    '--save-every',
+    default=500,
+    type=int,
+    help='Number of drawing iterations before writing a frame to PNG')
+
 for sub_parser in sub_parsers:
     sub_parser.add_argument(
         '--color',
