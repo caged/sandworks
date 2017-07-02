@@ -5,6 +5,7 @@ from numpy import arange
 from numpy import zeros
 from numpy import column_stack
 from numpy import array
+from time import time
 
 from sand import Sand
 from ..lib.sand_spline import SandSpline
@@ -69,5 +70,6 @@ def generate(args):
             xy = next(s)
             sand.paint_dots(xy)
             if not j % (save_frame * line_count):
-                sand.write_to_png('tmp/frame-{}.png'.format(j), gamma)
+                print('Saving frame {}'.format(j))
+                sand.write_to_png('tmp/{}-{}.png'.format(int(time()), j), gamma)
             j += 1
