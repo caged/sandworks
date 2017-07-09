@@ -6,6 +6,7 @@ from numpy import column_stack
 from numpy import sort
 from numpy import interp
 
+
 class SimpleLinearScale:
     def __init__(self, domain, range):
         self.domain = domain

@@ -52,7 +52,7 @@ def generate(args):
         for distribution in distributions:
             print('Generating {} with {} distribution'.format(group, distribution))
 
-            sand = Sand(args.size)
+            sand = Sand(args.width, args.height)
             sand.set_bg(bg_color)
             sand.set_rgba(sand_color)
 
@@ -67,7 +67,7 @@ def generate(args):
         for distribution in distributions:
             print('Generating {} with {} distribution'.format(group, distribution))
 
-            sand = Sand(args.size)
+            sand = Sand(args.width, args.height)
             sand.set_bg(bg_color)
             sand.set_rgba(sand_color)
 
@@ -82,7 +82,7 @@ def generate(args):
         for distribution in distributions:
             print('Generating {} with {} distribution'.format(group, distribution))
 
-            sand = Sand(args.size)
+            sand = Sand(args.width, args.height)
             sand.set_bg(bg_color)
             sand.set_rgba(sand_color)
 
@@ -95,7 +95,7 @@ def generate(args):
         for distribution in distributions:
             print('Generating {} with {} distribution'.format(group, distribution))
 
-            sand = Sand(args.size)
+            sand = Sand(args.width, args.height)
             sand.set_bg(bg_color)
             sand.set_rgba(sand_color)
 
