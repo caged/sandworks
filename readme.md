@@ -18,6 +18,7 @@ pip install .
 sandworks --help
 sandworks playground --color '#111111'
 sandworks playground --bg-color '#111111' --color '#ffb605'
+sandworks horizontal_spline --lines 100 --color '#555555' --width 10800 --height 10200
 ```
 
 ### Special Attribution

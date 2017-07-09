@@ -5,5 +5,5 @@ sandworks horizontal_spline \
   --lines 50 \
   --color '#555555' \
   --width 6000 \
-  --height 4800
-  --margin 50
+  --height 4800 \
+  --margin 200
