@@ -6,6 +6,7 @@ from numpy import zeros
 from numpy import column_stack
 from numpy import array
 from time import time
+from math import radians
 
 import cairocffi as cairo
 from sand import Sand
@@ -26,8 +27,8 @@ def generate(args):
     height = args.height
 
     if args.dir == 'vertical':
-        width = height
-        height = width
+        width = args.height
+        height = args.width
 
     xscale = SimpleLinearScale(domain=array([0, width]), range=array([0, 1]))
     yscale = SimpleLinearScale(domain=array([0, height]), range=array([0, 1]))
@@ -95,11 +96,11 @@ def generate(args):
 
                 if args.dir == 'vertical':
                     sand.write_to_surface(gamma)
-                    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+                    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, args.width, args.height)
                     context = cairo.Context(surface)
-                    context.rotate(90.0 * pi / 180.0)
-                    context.translate(width, -height)
-                    # context.scale(1.0, 1.0)
+                    context.rotate(radians(90))
+                    context.translate(0, -height)
+                    context.scale(1.0, 1.0)
                     context.set_source_surface(sand.sur, 0, 0)
                     context.paint()
                     surface.write_to_png(file_name)
