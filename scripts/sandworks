@@ -4,6 +4,7 @@ import argparse
 import importlib
 import sandworks
 from sandworks.generators import playground
+import os
 
 parser = argparse.ArgumentParser(description='Generate some cool spline art')
 
@@ -66,6 +67,11 @@ for sub_parser in sub_parsers:
         type=int,
         help='pixel size of height')
     sub_parser.add_argument(
+        '--out-dir',
+        default='tmp',
+        type=str,
+        help='directory to output results')
+    sub_parser.add_argument(
         '--frame-prefix',
         default='timestamp',
         type=str,
@@ -76,6 +82,7 @@ args = parser.parse_args()
 generator_name = "sandworks.generators.{}".format(args.generator)
 
 try:
+    os.makedirs(args.out_dir)
     generate_function = getattr(importlib.import_module(generator_name), 'generate')
     generate_function(args)
 except Exception as e:

@@ -78,5 +78,5 @@ def generate(args):
             sand.paint_dots(xy)
             if not j % (save_frame * line_count):
                 print('Saving frame {}'.format(j))
-                sand.write_to_png('tmp/{}-{}.png'.format(int(time()), j), gamma)
+                sand.write_to_png('{}/{}-{}.png'.format(args.out_dir, int(time()), j), gamma)
             j += 1

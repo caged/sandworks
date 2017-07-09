@@ -61,7 +61,7 @@ def generate(args):
             bb = method((count, 2))
             cc = randint(0, 500, size=count)
             getattr(sand, group)(aa, bb, cc)
-            sand.write_to_png('tmp/{}-{}.png'.format(group, distribution))
+            sand.write_to_png('{}/{}-{}.png'.format(args.out_dir, group, distribution))
 
     for group in group_b:
         for distribution in distributions:
@@ -76,7 +76,7 @@ def generate(args):
             bb = method(count)
             cc = randint(0, 250, size=count)
             getattr(sand, group)(aa, bb, cc)
-            sand.write_to_png('tmp/{}-{}.png'.format(group, distribution))
+            sand.write_to_png('{}/{}-{}.png'.format(args.out_dir, group, distribution))
 
     for group in group_c:
         for distribution in distributions:
@@ -89,7 +89,7 @@ def generate(args):
             method = getattr(numpy.random, distribution)
             aa = method((count * 100, 2))
             getattr(sand, group)(aa)
-            sand.write_to_png('tmp/{}-{}.png'.format(group, distribution))
+            sand.write_to_png('{}/{}-{}.png'.format(args.out_dir, group, distribution))
 
     for group in group_d:
         for distribution in distributions:
@@ -105,4 +105,4 @@ def generate(args):
             cc = method((count, 2))
             dd = randint(0, 500, size=count)
             getattr(sand, group)(aa, bb, cc, dd)
-            sand.write_to_png('tmp/{}-{}.png'.format(group, distribution))
+            sand.write_to_png('{}/{}-{}.png'.format(args.out_dir, group, distribution))
