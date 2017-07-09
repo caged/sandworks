@@ -7,6 +7,7 @@ from numpy import column_stack
 from numpy import array
 from time import time
 
+import cairocffi as cairo
 from sand import Sand
 from ..lib.sand_spline import SandSpline
 from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
@@ -21,8 +22,11 @@ def generate(args):
     # Number of lines
     line_count = args.lines
 
-    xscale = SimpleLinearScale(domain=array([0, args.width]), range=array([0, 1]))
-    yscale = SimpleLinearScale(domain=array([0, args.height]), range=array([0, 1]))
+    width = args.width
+    height = args.height
+
+    xscale = SimpleLinearScale(domain=array([0, width]), range=array([0, 1]))
+    yscale = SimpleLinearScale(domain=array([0, height]), range=array([0, 1]))
 
     # Margin as a pixel value of total size.  Convert that margin to a number between 0..1
     # representing the percentage of total pixel size
@@ -51,7 +55,7 @@ def generate(args):
     sand_color.append(0.001)
     bg_color.append(1)
 
-    sand = Sand(args.width, args.height)
+    sand = Sand(width, height)
     sand.set_rgba(sand_color)
     sand.set_bg(bg_color)
 
@@ -76,12 +80,23 @@ def generate(args):
         for s in splines:
             xy = next(s)
             sand.paint_dots(xy)
-            if not j % (save_frame * line_count):
+            if j is not 0 and not j % (save_frame * line_count):
                 frame_number = int(j / save_frame)
                 print('Saving frame {}'.format(frame_number))
-                sand.write_to_png('{}/{}-{}.png'.format(
+                sand.write_to_surface(gamma)
+                surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+                context = cairo.Context(surface)
+                context.rotate(90.0 * pi / 180.0)
+                context.translate(width, -height)
+                # context.scale(1.0, 1.0)
+                context.set_source_surface(sand.sur, 0, 0)
+                context.paint()
+
+                # surface.write_to_png(output_path)
+                file_name = '{}/{}-{}.png'.format(
                     args.out_dir,
                     int(time()),
-                    frame_number),
-                    gamma)
+                    frame_number)
+                # print(gamma)
+                surface.write_to_png(file_name)
             j += 1

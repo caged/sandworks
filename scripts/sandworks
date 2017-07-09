@@ -14,11 +14,11 @@ subparsers = parser.add_subparsers(
     description='Types of generator subcommands')
 
 playground_parser = subparsers.add_parser('playground')
-horizontal_spline_parser = subparsers.add_parser('horizontal_spline')
+splines_parser = subparsers.add_parser('splines')
 
 sub_parsers = [
     playground_parser,
-    horizontal_spline_parser
+    splines_parser
 ]
 
 playground_parser.add_argument(
@@ -27,19 +27,19 @@ playground_parser.add_argument(
     type=int,
     help='number of noise itterations')
 
-horizontal_spline_parser.add_argument(
+splines_parser.add_argument(
     '--lines',
     default=50,
     type=int,
     help='number of lines to draw')
 
-horizontal_spline_parser.add_argument(
+splines_parser.add_argument(
     '--save-every',
     default=500,
     type=int,
     help='Number of drawing iterations before writing a frame to PNG')
 
-horizontal_spline_parser.add_argument(
+splines_parser.add_argument(
     '--margin',
     default=100,
     type=int,
