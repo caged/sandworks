@@ -19,6 +19,19 @@ def guide_iterator(x, y):
         yield array([[x, y]])
 
 
+def make_vertical_surface(sand, gamma, canvas_width, canvas_height, flipped_height):
+    sand.write_to_surface(gamma)
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, canvas_width, canvas_height)
+    context = cairo.Context(surface)
+    context.rotate(radians(90))
+    context.translate(0, -flipped_height)
+    context.scale(1.0, 1.0)
+    context.set_source_surface(sand.sur, 0, 0)
+    context.paint()
+
+    return surface
+
+
 def generate(args):
     # Number of lines
     line_count = args.lines
@@ -95,14 +108,15 @@ def generate(args):
                 print('Saving frame {}'.format(frame_number))
 
                 if args.dir == 'vertical':
-                    sand.write_to_surface(gamma)
-                    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, args.width, args.height)
-                    context = cairo.Context(surface)
-                    context.rotate(radians(90))
-                    context.translate(0, -height)
-                    context.scale(1.0, 1.0)
-                    context.set_source_surface(sand.sur, 0, 0)
-                    context.paint()
+                    surface = make_vertical_surface(sand, gamma, args.width, args.height, height)
+                    # sand.write_to_surface(gamma)
+                    # surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, args.width, args.height)
+                    # context = cairo.Context(surface)
+                    # context.rotate(radians(90))
+                    # context.translate(0, -height)
+                    # context.scale(1.0, 1.0)
+                    # context.set_source_surface(sand.sur, 0, 0)
+                    # context.paint()
                     surface.write_to_png(file_name)
                 else:
                     sand.write_to_png(file_name, gamma)
