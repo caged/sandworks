@@ -28,6 +28,19 @@ playground_parser.add_argument(
     help='number of noise itterations')
 
 splines_parser.add_argument(
+    '--count',
+    default=10000,
+    type=int,
+    help='number of noise itterations')
+
+splines_parser.add_argument(
+    '--dir',
+    default='horizontal',
+    type=str,
+    choices=('horizontal', 'vertical'),
+    help='direction to draw lines')
+
+splines_parser.add_argument(
     '--lines',
     default=50,
     type=int,

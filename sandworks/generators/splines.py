@@ -25,6 +25,10 @@ def generate(args):
     width = args.width
     height = args.height
 
+    if args.dir == 'vertical':
+        width = height
+        height = width
+
     xscale = SimpleLinearScale(domain=array([0, width]), range=array([0, 1]))
     yscale = SimpleLinearScale(domain=array([0, height]), range=array([0, 1]))
 
@@ -82,21 +86,23 @@ def generate(args):
             sand.paint_dots(xy)
             if j is not 0 and not j % (save_frame * line_count):
                 frame_number = int(j / save_frame)
-                print('Saving frame {}'.format(frame_number))
-                sand.write_to_surface(gamma)
-                surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-                context = cairo.Context(surface)
-                context.rotate(90.0 * pi / 180.0)
-                context.translate(width, -height)
-                # context.scale(1.0, 1.0)
-                context.set_source_surface(sand.sur, 0, 0)
-                context.paint()
-
-                # surface.write_to_png(output_path)
                 file_name = '{}/{}-{}.png'.format(
                     args.out_dir,
                     int(time()),
                     frame_number)
-                # print(gamma)
-                surface.write_to_png(file_name)
+
+                print('Saving frame {}'.format(frame_number))
+
+                if args.dir == 'vertical':
+                    sand.write_to_surface(gamma)
+                    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+                    context = cairo.Context(surface)
+                    context.rotate(90.0 * pi / 180.0)
+                    context.translate(width, -height)
+                    # context.scale(1.0, 1.0)
+                    context.set_source_surface(sand.sur, 0, 0)
+                    context.paint()
+                    surface.write_to_png(file_name)
+                else:
+                    sand.write_to_png(file_name, gamma)
             j += 1
