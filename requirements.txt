@@ -1,2 +1,1 @@
 -e git+https://github.com/Caged/fast-sand-paint.git@non-write-transfer#egg=fast-sand-paint-0.1.0
--e git+https://github.com/inconvergent/fn.git@0750ea6d243cdca6e997da4b2c65bdb0e4dab404#egg=fn
