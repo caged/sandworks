@@ -20,6 +20,9 @@ def guide_iterator(x, y):
 
 
 def make_vertical_surface(sand, gamma, canvas_width, canvas_height, flipped_height):
+    """
+    Make a vertical image
+    """
     sand.write_to_surface(gamma)
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, canvas_width, canvas_height)
     context = cairo.Context(surface)
@@ -96,6 +99,7 @@ def generate(args):
     j = 0
     while True:
         for s in splines:
+            start = time()
             xy = next(s)
             sand.paint_dots(xy)
             if j is not 0 and not j % (save_frame * line_count):
@@ -105,19 +109,12 @@ def generate(args):
                     int(time()),
                     frame_number)
 
-                print('Saving frame {}'.format(frame_number))
-
                 if args.dir == 'vertical':
                     surface = make_vertical_surface(sand, gamma, args.width, args.height, height)
-                    # sand.write_to_surface(gamma)
-                    # surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, args.width, args.height)
-                    # context = cairo.Context(surface)
-                    # context.rotate(radians(90))
-                    # context.translate(0, -height)
-                    # context.scale(1.0, 1.0)
-                    # context.set_source_surface(sand.sur, 0, 0)
-                    # context.paint()
                     surface.write_to_png(file_name)
                 else:
                     sand.write_to_png(file_name, gamma)
+
+                print('Saved frame {} in {}'.format(frame_number, time() - start))
+
             j += 1
