@@ -1,0 +1,11 @@
+#!/bin/bash
+
+python -i -c "from numpy import pi
+from numpy import column_stack
+from numpy import sin
+from numpy import cos
+from numpy import reshape
+from numpy import zeros
+from numpy.random import random
+
+from sandworks.lib.helpers import _rnd_interpolate"
