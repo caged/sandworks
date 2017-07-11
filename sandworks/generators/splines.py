@@ -84,7 +84,8 @@ def generate(args):
 
     # For each y column
     for index, ypos in enumerate(linspace(margin_y, 1.0 - margin_y, line_count)):
-        # TODO: 4?  Not sure what purpose this number serves.
+        # TODO: 4?  Appears to affect the tightness of the wave noise.  That is, higher values like
+        # 500 appear to produce more nodes in each spline, resulting in more noise detail.
         pnum = 4 + index
         guide = guide_iterator(0.5, ypos)
 
