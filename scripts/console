@@ -7,5 +7,6 @@ from numpy import cos
 from numpy import reshape
 from numpy import zeros
 from numpy.random import random
+from numpy import linspace
 
 from sandworks.lib.helpers import _rnd_interpolate"
