@@ -15,10 +15,12 @@ subparsers = parser.add_subparsers(
 
 playground_parser = subparsers.add_parser('playground')
 splines_parser = subparsers.add_parser('splines')
+circles_parser = subparsers.add_parser('circles')
 
 sub_parsers = [
     playground_parser,
-    splines_parser
+    splines_parser,
+    circles_parser
 ]
 
 playground_parser.add_argument(
@@ -52,11 +54,11 @@ splines_parser.add_argument(
     type=int,
     help='Number of drawing iterations before writing a frame to PNG')
 
-splines_parser.add_argument(
-    '--margin',
-    default=100,
+circles_parser.add_argument(
+    '--save-every',
+    default=500,
     type=int,
-    help='Margin around borders of artwork canvas')
+    help='Number of drawing iterations before writing a frame to PNG')
 
 for sub_parser in sub_parsers:
     sub_parser.add_argument(
@@ -79,6 +81,11 @@ for sub_parser in sub_parsers:
         default=1500,
         type=int,
         help='pixel size of height')
+    sub_parser.add_argument(
+        '--margin',
+        default=100,
+        type=int,
+        help='Margin around borders of artwork canvas')
     sub_parser.add_argument(
         '--out-dir',
         default='tmp',
