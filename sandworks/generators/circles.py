@@ -51,38 +51,47 @@ def generate(args):
     bg_color = hex_to_rgb_decimal(args.bg_color)
 
     # Set alpha
-    sand_color.append(0.001)
+    sand_color.append(1)
     bg_color.append(1)
 
     sand = Sand(width, height)
     sand.set_rgba(sand_color)
     sand.set_bg(bg_color)
 
-    splines = []
-    edge = 0.08
-    grid = 15
-    leap_y = (1.0 - 2 * edge) / (grid - 1) * 0.5 * 0.75
-    step = 0.0000001
-    inum = 2000
-    twopi = pi * 2.0
+    for i in range(0, 100):
+        num_points = 800
+        angle = random() * (pi * 2) + linspace(0, (pi * 2), num_points)
+        points = column_stack((cos(angle), sin(angle))) * (0.8 * random() * 0.4)
+        path = array([[0.5, 0.5]]) + points
+        sand.paint_dots(path)
 
-    splines = []
-    for x in linspace(edge, 1.0-edge, grid):
-        for y in linspace(edge, 1.0-edge, grid):
-            guide = guide_iterator(x, y)
-            pnum = randint(10, 150)
-
-            a = random() * twopi + linspace(0, twopi, pnum)
-            path = column_stack((cos(a), sin(a))) * leap_y
-
-            scale = arange(pnum).astype('float') * step
-
-            s = SandSpline(guide, path, inum, scale)
-        splines.append(s)
-
-    colors = get_colors('p1.png')
-    nc = len(colors)
-
-    while True:
-        for s in splines:
-            print(s)
+    # sand.paint_dots(random((100000, 2)))
+    sand.write_to_png("test.png")
+    # splines = []
+    # edge = 0.08
+    # grid = 15
+    # leap_y = (1.0 - 2 * edge) / (grid - 1) * 0.5 * 0.75
+    # step = 0.0000001
+    # inum = 2000
+    # twopi = pi * 2.0
+    #
+    # splines = []
+    # for x in linspace(edge, 1.0-edge, grid):
+    #     for y in linspace(edge, 1.0-edge, grid):
+    #         guide = guide_iterator(x, y)
+    #         pnum = randint(10, 150)
+    #
+    #         a = random() * twopi + linspace(0, twopi, pnum)
+    #         path = column_stack((cos(a), sin(a))) * leap_y
+    #
+    #         scale = arange(pnum).astype('float') * step
+    #
+    #         s = SandSpline(guide, path, inum, scale)
+    #     splines.append(s)
+    #
+    # colors = get_colors('p1.png')
+    # nc = len(colors)
+    #
+    # while True:
+    #     for s in splines:
+    #         print(s)
