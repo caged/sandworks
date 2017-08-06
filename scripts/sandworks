@@ -16,11 +16,13 @@ subparsers = parser.add_subparsers(
 playground_parser = subparsers.add_parser('playground')
 splines_parser = subparsers.add_parser('splines')
 circles_parser = subparsers.add_parser('circles')
+grid_parser = subparsers.add_parser('grid')
 
 sub_parsers = [
     playground_parser,
     splines_parser,
-    circles_parser
+    circles_parser,
+    grid_parser
 ]
 
 playground_parser.add_argument(
@@ -55,6 +57,12 @@ splines_parser.add_argument(
     help='Number of drawing iterations before writing a frame to PNG')
 
 circles_parser.add_argument(
+    '--save-every',
+    default=500,
+    type=int,
+    help='Number of drawing iterations before writing a frame to PNG')
+
+grid_parser.add_argument(
     '--save-every',
     default=500,
     type=int,
