@@ -139,21 +139,15 @@ def generate(args):
         cracks[num] = Crack(sand=sand)
         num += 1
 
-    # c = Crack()
     i = 0
     try:
         while True:
             for n in range(num):
                 cracks[n].move()
-            # for crack in cracks:
-            #     crack.move()
-            #
+
             if i % 100000 == 0:
                 sand.write_to_png('tmp/c-{}.png'.format(i))
             i += 1
-            # if i % 50000 == 0:
-            #     c.sand.write_to_png('tmp/c-{}.png'.format(i))
-            # c.move()
-            # i += 1
+
     except KeyboardInterrupt:
         print('Finished!')
