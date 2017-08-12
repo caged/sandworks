@@ -30,6 +30,8 @@ class Crack:
         self.t = 0  # Direction of travel
         self.w = WIDTH
         self.h = WIDTH
+        self.xs = SimpleLinearScale(domain=array([0, self.w]), range=array([0, 1]))
+        self.ys = SimpleLinearScale(domain=array([0, self.h]), range=array([0, 1]))
 
         self.sand = sand
         self.find_start()
