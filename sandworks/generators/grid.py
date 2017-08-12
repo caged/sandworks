@@ -20,8 +20,8 @@ from ..lib.sand_spline import SandSpline
 from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
 
 
-WIDTH = 900
-HEIGHT = 900
+WIDTH = 1800
+HEIGHT = 1800
 
 
 class Crack:
@@ -87,9 +87,9 @@ class Crack:
         self.sand.paint_dots(dots)
 
         if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
-            if cgrid[cy * self.w + cx] > 10000 or abs(cgrid[cy * self.w + cx] - self.t < 5):
+            if cgrid[cy * self.w + cx] > 10000 or abs(cgrid[cy * self.w + cx] - self.t) < 5:
                 cgrid[cy * self.w + cx] = int(self.t)
-            elif abs(cgrid[cy * self.w + cx] - self.t > 2):
+            elif abs(cgrid[cy * self.w + cx] - self.t) > 2:
                 self.find_start()
                 make_crack(sand=self.sand)
         else:
