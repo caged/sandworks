@@ -1,0 +1,10 @@
+#!/bin/bash
+
+last_image=$(ls tmp | sort -nr -t - -k 2 | head -n 1)
+
+ffmpeg \
+  -i 'tmp/c-%d.png' \
+  -c:v libx264 \
+  -pix_fmt yuv420p \
+  -movflags +faststart \
+  output.mp4
