@@ -82,7 +82,7 @@ def generate(args):
     bg_color = hex_to_rgb_decimal(args.bg_color)
 
     # Set alpha
-    sand_color.append(0.001)
+    sand_color.append(0.1)
     bg_color.append(1)
 
     sand = Sand(width, height)
