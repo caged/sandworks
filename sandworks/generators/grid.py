@@ -25,7 +25,7 @@ cgrid = zeros(WIDTH * HEIGHT)
 class Crack:
     grid = zeros(WIDTH * HEIGHT)
 
-    def __init__(self):
+    def __init__(self, sand):
         self.x = 0  # X position on grid
         self.y = 0  # Y position on grid
         self.t = 0  # Direction of travel
@@ -33,13 +33,7 @@ class Crack:
         self.h = HEIGHT
         self.sand = Sand(self.w, self.h)
 
-        sand_color = hex_to_rgb_decimal('cc0000')
-        bg_color = hex_to_rgb_decimal('ffffff')
-        sand_color.append(1)
-        bg_color.append(1)
-
-        self.sand.set_rgba(sand_color)
-        self.sand.set_bg(bg_color)
+        self.sand = sand
         self.find_start()
 
     def find_start(self):
