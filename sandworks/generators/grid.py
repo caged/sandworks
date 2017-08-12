@@ -20,8 +20,8 @@ from ..lib.sand_spline import SandSpline
 from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
 
 
-WIDTH = 1800
-HEIGHT = 1800
+WIDTH = 1000
+HEIGHT = 1000
 
 
 class Crack:
@@ -115,8 +115,8 @@ def make_crack(sand):
 
 def generate(args):
     global cgrid
-    width = args.width
-    height = args.height
+    width = WIDTH
+    height = HEIGHT
 
     xscale = SimpleLinearScale(domain=array([0, width]), range=array([0, 1]))
     yscale = SimpleLinearScale(domain=array([0, height]), range=array([0, 1]))
