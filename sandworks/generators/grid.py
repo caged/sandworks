@@ -23,15 +23,13 @@ cgrid = zeros(WIDTH * HEIGHT)
 
 
 class Crack:
-    grid = zeros(WIDTH * HEIGHT)
 
     def __init__(self, sand):
         self.x = 0  # X position on grid
         self.y = 0  # Y position on grid
         self.t = 0  # Direction of travel
         self.w = WIDTH
-        self.h = HEIGHT
-        self.sand = Sand(self.w, self.h)
+        self.h = WIDTH
 
         self.sand = sand
         self.find_start()
