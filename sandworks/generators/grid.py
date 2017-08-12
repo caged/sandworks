@@ -168,10 +168,10 @@ def generate(args):
             for n in range(num):
                 cracks[n].move()
 
-            if i % 1000 == 0:
-                sand.write_to_png('tmp/c-{}.png'.format(i))
+            if i % save_frame == 0 and i is not 0:
+                sand.write_to_png('tmp/c-{}.png'.format(int(i / save_frame)))
             i += 1
 
     except KeyboardInterrupt:
         print('Finished!')
-        sand.write_to_png('tmp/c-{}.png'.format(i))
+        sand.write_to_png('tmp/c-0.png'.format(i))
