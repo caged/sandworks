@@ -68,6 +68,11 @@ def generate(args):
     margin_x = xscale(margin)
     margin_y = yscale(margin)
 
+    # The current number of cracks
+    num = 0
+    max_cracks = 200
+    cracks = empty(max_cracks, dtype=Crack)
+
     # Output PNG gamma
     gamma = 1.5
 
