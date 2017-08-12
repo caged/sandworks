@@ -23,8 +23,6 @@ from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
 WIDTH = 900
 HEIGHT = 900
 
-cgrid = zeros(WIDTH * HEIGHT)
-
 
 class Crack:
 
@@ -41,6 +39,7 @@ class Crack:
         self.find_start()
 
     def find_start(self):
+        global cgrid
         px = 0
         py = 0
         timeout = 0
@@ -62,11 +61,15 @@ class Crack:
             self.start_crack(px, py, a)
 
     def start_crack(self, x, y, t):
+        self.x = x
+        self.y = y
         self.t = t
         self.x += 0.61 * cos(t * pi / 180)
         self.y += 0.61 * sin(t * pi / 180)
 
     def move(self):
+        global cgrid
+
         px = self.x
         py = self.y
         self.x += 0.42 * cos(self.t * pi / 180)
@@ -83,9 +86,35 @@ class Crack:
         ]])
         self.sand.paint_dots(dots)
 
+        if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
+            if cgrid[cy * self.w + cx] > 10000 or abs(cgrid[cy * self.w + cx] - self.t < 5):
+                cgrid[cy * self.w + cx] = int(self.t)
+            elif abs(cgrid[cy * self.w + cx] - self.t > 2):
+                self.find_start()
+                make_crack(sand=self.sand)
+        else:
+            self.find_start()
+            make_crack(sand=self.sand)
+
+
+num = 0
+maxnum = 200
+cracks = empty(maxnum, dtype=Crack)
+cgrid = zeros(WIDTH * HEIGHT)
+
+
+def make_crack(sand):
+    global num
+    global maxnum
+    global cracks
+
+    if num < maxnum:
+        cracks[num] = Crack(sand=sand)
+        num += 1
+
 
 def generate(args):
-
+    global cgrid
     width = args.width
     height = args.height
 
@@ -97,11 +126,6 @@ def generate(args):
     margin = args.margin
     margin_x = xscale(margin)
     margin_y = yscale(margin)
-
-    # The current number of cracks
-    num = 0
-    max_cracks = 200
-    cracks = empty(max_cracks, dtype=Crack)
 
     # Output PNG gamma
     gamma = 1.5
@@ -136,8 +160,7 @@ def generate(args):
         cgrid[i] = randint(360)
 
     for k in range(3):
-        cracks[num] = Crack(sand=sand)
-        num += 1
+        make_crack(sand)
 
     i = 0
     try:
@@ -145,9 +168,10 @@ def generate(args):
             for n in range(num):
                 cracks[n].move()
 
-            if i % 100000 == 0:
+            if i % 1000 == 0:
                 sand.write_to_png('tmp/c-{}.png'.format(i))
             i += 1
 
     except KeyboardInterrupt:
         print('Finished!')
+        sand.write_to_png('tmp/c-{}.png'.format(i))
