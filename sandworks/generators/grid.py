@@ -3,10 +3,14 @@ from numpy import array
 from numpy import linspace
 from numpy import arange
 from numpy import zeros
+from numpy import empty
 from numpy import column_stack
 from numpy import array
 from numpy.random import random
 from numpy.random import randint
+from numpy.random import uniform
+from numpy import cos
+from numpy import sin
 from time import time
 from math import radians
 
@@ -42,16 +46,42 @@ class Crack:
         timeout = 0
         found = False
 
-        while not found or timeout > 1000:
-            timeout += 1
+        while not found:
             px = randint(self.w)
             py = randint(self.h)
-
-            if(self.grid[py * self.x + px] < 10000):
+            # print(cgrid[py * self.w + px], cgrid[py * self.w + px] < 10000, timeout)
+            if(cgrid[py * self.w + px] < 10000):
                 found = True
 
         if found:
-            print('FOUND!')
+            a = cgrid[py * self.w + px]
+            if randint(100) < 50:
+                a -= 90 + int(uniform(-2, 2.1))
+            else:
+                a += 90 + int(uniform(-2, 2.1))
+            self.start_crack(px, py, a)
+
+    def start_crack(self, x, y, t):
+        self.t = t
+        self.x += 0.61 * cos(t * pi / 180)
+        self.y += 0.61 * sin(t * pi / 180)
+
+    def move(self):
+        px = self.x
+        py = self.y
+        self.x += 0.42 * cos(self.t * pi / 180)
+        self.y += 0.42 * sin(self.t * pi / 180)
+
+        z = 0.33
+        cx = int(self.x + uniform(-z, z))
+        cy = int(self.y + uniform(-z, z))
+
+        # dots = random((1, 2))
+        dots = array([[
+            self.xs(self.x),
+            self.ys(self.y)
+        ]])
+        self.sand.paint_dots(dots)
 
 
 def generate(args):
