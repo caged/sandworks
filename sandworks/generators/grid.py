@@ -91,4 +91,34 @@ def generate(args):
 
     splines = []
 
-    c = Crack()
+    # TODO: move to initialization of cgrid
+    for y in range(HEIGHT):
+        for x in range(WIDTH):
+            cgrid[y * WIDTH + x] = 10001
+
+    for k in range(16):
+        i = randint(WIDTH * HEIGHT - 1)
+        cgrid[i] = randint(360)
+
+    for k in range(3):
+        cracks[num] = Crack(sand=sand)
+        num += 1
+
+    # c = Crack()
+    i = 0
+    try:
+        while True:
+            for n in range(num):
+                cracks[n].move()
+            # for crack in cracks:
+            #     crack.move()
+            #
+            if i % 100000 == 0:
+                sand.write_to_png('tmp/c-{}.png'.format(i))
+            i += 1
+            # if i % 50000 == 0:
+            #     c.sand.write_to_png('tmp/c-{}.png'.format(i))
+            # c.move()
+            # i += 1
+    except KeyboardInterrupt:
+        print('Finished!')
