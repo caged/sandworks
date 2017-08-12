@@ -19,6 +19,9 @@ from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
 WIDTH = 900
 HEIGHT = 900
 
+cgrid = zeros(WIDTH * HEIGHT)
+
+
 class Crack:
     grid = zeros(WIDTH * HEIGHT)
 
