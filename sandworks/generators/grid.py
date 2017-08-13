@@ -26,7 +26,7 @@ class SandPainter:
         self.ys = ys
         self.color = hex_to_rgb_decimal('cc0000')
         self.g = uniform(0.01, 0.1)
-        self.grains = 50
+        self.grains = 75
 
     def render(self, x, y, ox, oy):
         max_g = 1.0
