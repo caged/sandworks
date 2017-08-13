@@ -15,16 +15,24 @@ from sand import Sand
 from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale, get_colors
 
 
-WIDTH = 1000
-HEIGHT = 1000
+DPI = 300
+WIDTH = 4 * DPI
+HEIGHT = 4 * DPI
+
+
+@lru_cache(maxsize=1)
+def image_colors(img):
+    return get_colors(img)
 
 
 class SandPainter:
     def __init__(self, sand, xs, ys):
+        shuffle(image_colors('sandworks/images/gem.jpg'))
+
         self.sand = sand
         self.xs = xs
         self.ys = ys
-        self.color = hex_to_rgb_decimal('cc0000')
+        self.color = image_colors('sandworks/images/gem.jpg')[0]
         self.g = uniform(0.01, 0.1)
         self.grains = 75
 
@@ -37,7 +45,7 @@ class SandPainter:
         w = self.g / (self.grains - 1)
         for i in range(self.grains):
             a = 0.1 - i / (self.grains * 10.0)
-            self.sand.set_rgba([37 / 255, 168 / 255, 219 / 255, a])
+            self.sand.set_rgba(self.color + [a])
             dots = array([[
                 self.xs(ox + (x - ox) * sin(sin(i * w))),
                 self.ys(oy + (y - oy) * sin(sin(i * w)))
@@ -71,7 +79,6 @@ class Crack:
         while not found:
             px = randint(self.w)
             py = randint(self.h)
-            # print(cgrid[py * self.w + px], cgrid[py * self.w + px] < 10000, timeout)
             if(cgrid[py * self.w + px] < 10000):
                 found = True
 
@@ -109,7 +116,7 @@ class Crack:
             self.ys(self.y + uniform(-z, z))
         ]])
 
-        self.painter.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.5])
+        self.painter.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.3])
         self.painter.sand.paint_dots(dots)
 
         if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
@@ -148,7 +155,6 @@ maxnum = 200
 cracks = empty(maxnum, dtype=Crack)
 cgrid = zeros(WIDTH * HEIGHT)
 
-
 def make_crack(sand):
     global num
     global maxnum
@@ -161,6 +167,7 @@ def make_crack(sand):
 
 def generate(args):
     global cgrid
+
     width = WIDTH
     height = HEIGHT
 
@@ -179,9 +186,6 @@ def generate(args):
     # What frame to write out
     save_frame = args.save_every
     frame_prefix = args.frame_prefix
-
-    # The number of points along the spline.  More points means a denser-looking spline.
-    stroke_limit = 100
 
     # Convert colors to RGB decimal
     sand_color = hex_to_rgb_decimal(args.color)
