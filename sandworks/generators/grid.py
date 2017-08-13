@@ -1,23 +1,18 @@
 from numpy import pi
 from numpy import array
-from numpy import linspace
 from numpy import arange
 from numpy import zeros
 from numpy import empty
-from numpy import column_stack
 from numpy import array
-from numpy.random import random
 from numpy.random import randint
 from numpy.random import uniform
+from numpy.random import shuffle
 from numpy import cos
 from numpy import sin
-from time import time
-from math import radians
+from functools import lru_cache
 
-import cairocffi as cairo
 from sand import Sand
-from ..lib.sand_spline import SandSpline
-from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale
+from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale, get_colors
 
 
 WIDTH = 1000
