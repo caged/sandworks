@@ -178,6 +178,7 @@ def generate(args):
 
     # What frame to write out
     save_frame = args.save_every
+    frame_prefix = args.frame_prefix
 
     # The number of points along the spline.  More points means a denser-looking spline.
     stroke_limit = 100
@@ -215,9 +216,9 @@ def generate(args):
                 cracks[n].move()
 
             if i % save_frame == 0 and i is not 0:
-                sand.write_to_png('tmp/c-{}.png'.format(int(i / save_frame)))
+                sand.write_to_png('tmp/{}-{}.png'.format(frame_prefix, int(i / save_frame)))
             i += 1
 
     except KeyboardInterrupt:
         print('Finished!')
-        sand.write_to_png('tmp/c-0.png'.format(i))
+        sand.write_to_png('tmp/{}-0.png'.format(frame_prefix))

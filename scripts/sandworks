@@ -103,8 +103,7 @@ for sub_parser in sub_parsers:
         '--frame-prefix',
         default='timestamp',
         type=str,
-        choices=('timestamp', 'frame'),
-        help='name prefix generator for frame images')
+        help='string prefix for frame images')
 
 args = parser.parse_args()
 generator_name = "sandworks.generators.{}".format(args.generator)
