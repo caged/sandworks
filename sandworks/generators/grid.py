@@ -24,6 +24,32 @@ WIDTH = 1000
 HEIGHT = 1000
 
 
+class SandPainter:
+    def __init__(self, sand):
+        self.sand = sand
+        self.color = hex_to_rgb_decimal('cc0000')
+        self.g = uniform(0.01, 0.1)
+        self.grains = 64
+
+    def render(self, x, y, ox, oy):
+        g += uniform(-0.050, 0.050)
+        max_g = 1.0
+        if g < 0:
+            g = 0
+        if g > max_g:
+            g = max_g
+
+        w = g / (self.grains - 1)
+        for i in range(self.grains):
+            a = 0.1 - i / (self.grains * 10.0)
+            dots = array([[
+                ox + (x - ox) * sin(sin(i * w)),
+                oy + (y - oy) * sin(sin(i * w))
+            ]])
+            self.sand.paint_dots(dots)
+
+
+
 class Crack:
 
     def __init__(self, sand):
@@ -32,6 +58,8 @@ class Crack:
         self.t = 0  # Direction of travel
         self.w = WIDTH
         self.h = WIDTH
+        self.g = uniform(0.01, 0.1)
+        self.grains = 64
         self.xs = SimpleLinearScale(domain=array([0, self.w]), range=array([0, 1]))
         self.ys = SimpleLinearScale(domain=array([0, self.h]), range=array([0, 1]))
 
@@ -79,11 +107,15 @@ class Crack:
         cx = int(self.x + uniform(-z, z))
         cy = int(self.y + uniform(-z, z))
 
+        self.region_color()
+
         # dots = random((1, 2))
         dots = array([[
             self.xs(self.x),
             self.ys(self.y)
         ]])
+
+        self.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 1])
         self.sand.paint_dots(dots)
 
         if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
@@ -95,6 +127,46 @@ class Crack:
         else:
             self.find_start()
             make_crack(sand=self.sand)
+
+    def region_color(self):
+        global cgrid
+        rx = self.x
+        ry = self.y
+        openspace = True
+
+        while openspace:
+            rx += 0.81 * sin(self.t * pi / 180)
+            ry += 0.81 * cos(self.t * pi / 180)
+            cx = int(rx)
+            cy = int(ry)
+
+            if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
+                if not cgrid[cy * self.w + cx] > 10000:
+                    openspace = False
+            else:
+                openspace = False
+
+        self.render(rx, ry, self.x, self.y)
+
+    def render(self, x, y, ox, oy):
+
+        self.g += uniform(-0.050, 0.050)
+        max_g = 1.0
+        if self.g < 0:
+            self.g = 0
+        if self.g > max_g:
+            self.g = max_g
+
+        w = self.g / (self.grains - 1)
+        for i in range(self.grains):
+            a = 0.1 - i / (self.grains * 10.0)
+            self.sand.set_rgba([37 / 255, 168 / 255, 219 / 255, a])
+            dots = array([[
+                self.xs(ox + (x - ox) * sin(sin(i * w))),
+                self.ys(oy + (y - oy) * sin(sin(i * w)))
+            ]])
+
+            self.sand.paint_dots(dots)
 
 
 num = 0
