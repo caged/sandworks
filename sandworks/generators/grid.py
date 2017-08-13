@@ -115,7 +115,7 @@ class Crack:
             self.ys(self.y)
         ]])
 
-        self.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 1])
+        self.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.1])
         self.sand.paint_dots(dots)
 
         if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
