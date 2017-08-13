@@ -104,11 +104,9 @@ class Crack:
 
         self.region_color()
 
-        # dots = random((1, 2))
-        # TODO: use z to scatter dots slightly
         dots = array([[
-            self.xs(self.x),
-            self.ys(self.y)
+            self.xs(self.x + uniform(-z, z)),
+            self.ys(self.y + uniform(-z, z))
         ]])
 
         self.painter.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.5])
