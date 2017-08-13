@@ -25,20 +25,19 @@ HEIGHT = 1000
 
 
 class SandPainter:
-    def __init__(self, sand):
+    def __init__(self, sand, xs, ys):
         self.sand = sand
+        self.xs = xs
+        self.ys = ys
         self.color = hex_to_rgb_decimal('cc0000')
         self.g = uniform(0.01, 0.1)
-        self.grains = 64
+        self.grains = 50
 
     def render(self, x, y, ox, oy):
-
-        self.g += uniform(-0.050, 0.050)
         max_g = 1.0
-        if self.g < 0:
-            self.g = 0
-        if self.g > max_g:
-            self.g = max_g
+        self.g += uniform(-0.050, 0.050)
+        self.g = 0 if self.g < 0 else self.g
+        self.y = max_g if self.g > max_g else self.g
 
         w = self.g / (self.grains - 1)
         for i in range(self.grains):
@@ -48,7 +47,6 @@ class SandPainter:
                 self.xs(ox + (x - ox) * sin(sin(i * w))),
                 self.ys(oy + (y - oy) * sin(sin(i * w)))
             ]])
-
             self.sand.paint_dots(dots)
 
 
@@ -65,7 +63,7 @@ class Crack:
         self.xs = SimpleLinearScale(domain=array([0, self.w]), range=array([0, 1]))
         self.ys = SimpleLinearScale(domain=array([0, self.h]), range=array([0, 1]))
 
-        self.painter = SandPainter(sand=sand)
+        self.painter = SandPainter(sand=sand, xs=self.xs, ys=self.ys)
         self.find_start()
 
     def find_start(self):
@@ -112,12 +110,13 @@ class Crack:
         self.region_color()
 
         # dots = random((1, 2))
+        # TODO: use z to scatter dots slightly
         dots = array([[
             self.xs(self.x),
             self.ys(self.y)
         ]])
 
-        self.painter.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.1])
+        self.painter.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.5])
         self.painter.sand.paint_dots(dots)
 
         if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
@@ -138,7 +137,7 @@ class Crack:
 
         while openspace:
             rx += 0.81 * sin(self.t * pi / 180)
-            ry += 0.81 * cos(self.t * pi / 180)
+            ry -= 0.81 * cos(self.t * pi / 180)
             cx = int(rx)
             cy = int(ry)
 
@@ -148,7 +147,7 @@ class Crack:
             else:
                 openspace = False
 
-        # self.render(rx, ry, self.x, self.y)
+        self.painter.render(rx, ry, self.x, self.y)
 
 
 num = 0
