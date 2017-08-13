@@ -32,22 +32,24 @@ class SandPainter:
         self.grains = 64
 
     def render(self, x, y, ox, oy):
-        g += uniform(-0.050, 0.050)
-        max_g = 1.0
-        if g < 0:
-            g = 0
-        if g > max_g:
-            g = max_g
 
-        w = g / (self.grains - 1)
+        self.g += uniform(-0.050, 0.050)
+        max_g = 1.0
+        if self.g < 0:
+            self.g = 0
+        if self.g > max_g:
+            self.g = max_g
+
+        w = self.g / (self.grains - 1)
         for i in range(self.grains):
             a = 0.1 - i / (self.grains * 10.0)
+            self.sand.set_rgba([37 / 255, 168 / 255, 219 / 255, a])
             dots = array([[
-                ox + (x - ox) * sin(sin(i * w)),
-                oy + (y - oy) * sin(sin(i * w))
+                self.xs(ox + (x - ox) * sin(sin(i * w))),
+                self.ys(oy + (y - oy) * sin(sin(i * w)))
             ]])
-            self.sand.paint_dots(dots)
 
+            self.sand.paint_dots(dots)
 
 
 class Crack:
@@ -63,7 +65,7 @@ class Crack:
         self.xs = SimpleLinearScale(domain=array([0, self.w]), range=array([0, 1]))
         self.ys = SimpleLinearScale(domain=array([0, self.h]), range=array([0, 1]))
 
-        self.sand = sand
+        self.painter = SandPainter(sand=sand)
         self.find_start()
 
     def find_start(self):
@@ -115,18 +117,18 @@ class Crack:
             self.ys(self.y)
         ]])
 
-        self.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.1])
-        self.sand.paint_dots(dots)
+        self.painter.sand.set_rgba([50 / 255, 50 / 255, 50 / 255, 0.1])
+        self.painter.sand.paint_dots(dots)
 
         if cx >= 0 and cx < self.w and cy >= 0 and cy < self.h:
             if cgrid[cy * self.w + cx] > 10000 or abs(cgrid[cy * self.w + cx] - self.t) < 5:
                 cgrid[cy * self.w + cx] = int(self.t)
             elif abs(cgrid[cy * self.w + cx] - self.t) > 2:
                 self.find_start()
-                make_crack(sand=self.sand)
+                make_crack(sand=self.painter.sand)
         else:
             self.find_start()
-            make_crack(sand=self.sand)
+            make_crack(sand=self.painter.sand)
 
     def region_color(self):
         global cgrid
@@ -146,27 +148,7 @@ class Crack:
             else:
                 openspace = False
 
-        self.render(rx, ry, self.x, self.y)
-
-    def render(self, x, y, ox, oy):
-
-        self.g += uniform(-0.050, 0.050)
-        max_g = 1.0
-        if self.g < 0:
-            self.g = 0
-        if self.g > max_g:
-            self.g = max_g
-
-        w = self.g / (self.grains - 1)
-        for i in range(self.grains):
-            a = 0.1 - i / (self.grains * 10.0)
-            self.sand.set_rgba([37 / 255, 168 / 255, 219 / 255, a])
-            dots = array([[
-                self.xs(ox + (x - ox) * sin(sin(i * w))),
-                self.ys(oy + (y - oy) * sin(sin(i * w)))
-            ]])
-
-            self.sand.paint_dots(dots)
+        # self.render(rx, ry, self.x, self.y)
 
 
 num = 0
