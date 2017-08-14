@@ -187,6 +187,7 @@ def generate(args):
     # What frame to write out
     save_frame = args.save_every
     frame_prefix = args.frame_prefix
+    exit_frame = args.exit_frame
 
     # Convert colors to RGB decimal
     sand_color = hex_to_rgb_decimal(args.color)
@@ -223,6 +224,10 @@ def generate(args):
             if i % save_frame == 0 and i is not 0:
                 sand.write_to_png('tmp/{}-{}.png'.format(frame_prefix, int(i / save_frame)))
             i += 1
+
+            if exit_frame and (i / save_frame) > exit_frame:
+                sand.write_to_png('tmp/{}-0.png'.format(frame_prefix))
+                return False
 
     except KeyboardInterrupt:
         print('Finished!')

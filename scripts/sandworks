@@ -104,6 +104,10 @@ for sub_parser in sub_parsers:
         default='timestamp',
         type=str,
         help='string prefix for frame images')
+    sub_parser.add_argument(
+        '--exit-frame',
+        type=int,
+        help='Frame number to exit program')
 
 args = parser.parse_args()
 generator_name = "sandworks.generators.{}".format(args.generator)
