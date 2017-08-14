@@ -61,7 +61,7 @@ class Crack:
         self.y = 0  # Y position on grid
         self.t = 0  # Direction of travel
         self.w = WIDTH
-        self.h = WIDTH
+        self.h = HEIGHT
         self.g = uniform(0.01, 0.1)
         self.grains = 64
         self.xs = SimpleLinearScale(domain=array([0, self.w]), range=array([0, 1]))
