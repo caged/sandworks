@@ -10,14 +10,15 @@ from numpy.random import shuffle
 from numpy import cos
 from numpy import sin
 from functools import lru_cache
+import os
 
 from sand import Sand
 from ..lib.helpers import hex_to_rgb_decimal, SimpleLinearScale, get_colors
 
 
 DPI = 300
-WIDTH = 4 * DPI
-HEIGHT = 4 * DPI
+WIDTH = int(os.environ.get('WIDTH', 5)) * DPI
+HEIGHT = int(os.environ.get('HEIGHT', 5)) * DPI
 
 
 @lru_cache(maxsize=1)
