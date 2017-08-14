@@ -7,6 +7,7 @@ from numpy import array
 from numpy.random import randint
 from numpy.random import uniform
 from numpy.random import shuffle
+from numpy.random import choice
 from numpy import cos
 from numpy import sin
 from functools import lru_cache
@@ -27,15 +28,14 @@ def image_colors(img):
 
 
 class SandPainter:
-    def __init__(self, sand, xs, ys):
-        shuffle(image_colors('sandworks/images/gem.jpg'))
-
+    def __init__(self, sand, xs, ys, colors):
         self.sand = sand
         self.xs = xs
         self.ys = ys
-        self.color = image_colors('sandworks/images/gem.jpg')[0]
         self.g = uniform(0.01, 0.1)
         self.grains = 75
+        self.colors = colors
+        self.color = colors[choice(len(colors))]
 
     def render(self, x, y, ox, oy):
         max_g = 1.0
@@ -56,7 +56,7 @@ class SandPainter:
 
 class Crack:
 
-    def __init__(self, sand):
+    def __init__(self, sand, colors):
         self.x = 0  # X position on grid
         self.y = 0  # Y position on grid
         self.t = 0  # Direction of travel
@@ -64,10 +64,16 @@ class Crack:
         self.h = HEIGHT
         self.g = uniform(0.01, 0.1)
         self.grains = 64
+
         self.xs = SimpleLinearScale(domain=array([0, self.w]), range=array([0, 1]))
         self.ys = SimpleLinearScale(domain=array([0, self.h]), range=array([0, 1]))
 
-        self.painter = SandPainter(sand=sand, xs=self.xs, ys=self.ys)
+        self.painter = SandPainter(
+            sand=sand,
+            xs=self.xs,
+            ys=self.ys,
+            colors=colors)
+
         self.find_start()
 
     def find_start(self):
@@ -125,10 +131,10 @@ class Crack:
                 cgrid[cy * self.w + cx] = int(self.t)
             elif abs(cgrid[cy * self.w + cx] - self.t) > 2:
                 self.find_start()
-                make_crack(sand=self.painter.sand)
+                make_crack(sand=self.painter.sand, colors=self.painter.colors)
         else:
             self.find_start()
-            make_crack(sand=self.painter.sand)
+            make_crack(sand=self.painter.sand, colors=self.painter.colors)
 
     def region_color(self):
         global cgrid
@@ -156,13 +162,14 @@ maxnum = 200
 cracks = empty(maxnum, dtype=Crack)
 cgrid = zeros(WIDTH * HEIGHT)
 
-def make_crack(sand):
+
+def make_crack(sand, colors):
     global num
     global maxnum
     global cracks
 
     if num < maxnum:
-        cracks[num] = Crack(sand=sand)
+        cracks[num] = Crack(sand=sand, colors=colors)
         num += 1
 
 
@@ -171,18 +178,6 @@ def generate(args):
 
     width = WIDTH
     height = HEIGHT
-
-    xscale = SimpleLinearScale(domain=array([0, width]), range=array([0, 1]))
-    yscale = SimpleLinearScale(domain=array([0, height]), range=array([0, 1]))
-
-    # Margin as a pixel value of total size.  Convert that margin to a number between 0..1
-    # representing the percentage of total pixel size
-    margin = args.margin
-    margin_x = xscale(margin)
-    margin_y = yscale(margin)
-
-    # Output PNG gamma
-    gamma = 1.5
 
     # What frame to write out
     save_frame = args.save_every
@@ -203,6 +198,11 @@ def generate(args):
 
     splines = []
 
+    if args.color_from_image:
+        colors = get_colors(args.color_from_image)
+    else:
+        colors = [hex_to_rgb_decimal(args.color)]
+
     # TODO: move to initialization of cgrid
     for y in range(HEIGHT):
         for x in range(WIDTH):
@@ -213,7 +213,7 @@ def generate(args):
         cgrid[i] = randint(360)
 
     for k in range(3):
-        make_crack(sand)
+        make_crack(sand, colors=colors)
 
     i = 0
     try:

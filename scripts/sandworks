@@ -68,6 +68,18 @@ grid_parser.add_argument(
     type=int,
     help='Number of drawing iterations before writing a frame to PNG')
 
+grid_parser.add_argument(
+    '--color-from-image',
+    type=str,
+    help='Image to extract colors from')
+
+# grid_parser.add_argument(
+#     '--palette',
+#     default=500,
+#     type=int,
+#     choices=('horizontal', 'vertical'),
+#     help='Number of drawing iterations before writing a frame to PNG')
+
 for sub_parser in sub_parsers:
     sub_parser.add_argument(
         '--color',
