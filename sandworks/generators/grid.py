@@ -222,11 +222,17 @@ def generate(args):
                 cracks[n].move()
 
             if i % save_frame == 0 and i is not 0:
-                sand.write_to_png('tmp/{}-{}.png'.format(frame_prefix, int(i / save_frame)))
+                sand.write_to_png('{}/{}-{}.png'.format(
+                    args.out_dir,
+                    frame_prefix,
+                    int(i / save_frame)))
             i += 1
 
             if exit_frame and (i / save_frame) > exit_frame:
-                sand.write_to_png('tmp/{}-0.png'.format(frame_prefix))
+                sand.write_to_png('{}/{}-0.png'.format(
+                    args.out_dir,
+                    frame_prefix))
+
                 return False
 
     except KeyboardInterrupt:
