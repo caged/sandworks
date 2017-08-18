@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export WIDTH=10
+export HEIGHT=8
+
+color_images=${@-$(ls sandworks/images)}
+
+echo $color_images | xargs -n 1 -P 4 -I{} sandworks grid \
+      --color-from-image sandworks/images/{} \
+      --save-every 300 \
+      --frame-prefix {} \
+      --exit-frame 25
+
+mkdir -p tmp/samples
+mv tmp/*-0.png tmp/samples
