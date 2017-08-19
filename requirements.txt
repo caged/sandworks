@@ -1,3 +1,4 @@
 -e git+https://github.com/Caged/fast-sand-paint.git@non-write-transfer#egg=fast-sand-paint-0.1.0
 numpy==1.13.1
 scipy==0.18.1
+Pillow==3.3.0
