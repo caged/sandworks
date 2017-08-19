@@ -33,7 +33,7 @@ class SandPainter:
         self.xs = xs
         self.ys = ys
         self.g = uniform(0.01, 0.1)
-        self.grains = 75
+        self.grains = 125
         self.colors = colors
         self.color = colors[choice(len(colors))]
 
