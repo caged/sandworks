@@ -2,12 +2,14 @@ Sand artwork.
 
 ### Installation
 It doesn't appear pip can install from git urls via setup.py, and `--process-dependency-links` is
-deprecated, so you have to install this package by hand.
+deprecated, so you have to install some packages by hand.
 
 ```
 git clone https://github.com/Caged/sandworks.git
 cd sandworks
 pip install cython==0.25.0
+pip install -e git+https://github.com/Caged/fast-sand-paint.git@non-write-transfer#egg=fast-sand-paint-0.1.0
+
 pip install -r requirements.txt
 pip install .
 ```
