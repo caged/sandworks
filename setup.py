@@ -17,7 +17,7 @@ install_reqs = parse_requirements('requirements.txt', session=pip.download.PipSe
 reqs = [str(ir.req) for ir in install_reqs]
 setup(
     name='sandworks',
-    version='0.1.0',
+    version='0.2.0',
     description='Sand art',
     url='https://github.com/caged/sandworks',
     author='Justin Palmer',
