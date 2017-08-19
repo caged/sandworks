@@ -1,23 +1,14 @@
 #!/bin/bash
 
-export WIDTH=12
-export HEIGHT=8
+export WIDTH=36
+export HEIGHT=24
 
 num_samples=${1-5}
 color_image=$2
 color_images=
 
 for i in $(seq 1 $num_samples); do
-  color_images="$color_images $color_image"
+  color_images="$color_images $color_image $i"
 done
 
-
-echo "$color_images" | xargs -n 1 -P $num_samples -I{} sandworks grid \
-      --color-from-image {} \
-      --save-every 500 \
-      --frame-prefix $(date +%s) \
-      --out-dir=finals \
-      --exit-frame 30
-#
-# mkdir -p tmp/samples
-# mv tmp/*-0.png tmp/samples
+echo $color_images | xargs -n 2 -P 1 bash -c 'sandworks grid --color-from-image $0 --save-every 1000 --frame-prefix $1 --out-dir=finals --exit-frame 75'
