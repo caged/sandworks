@@ -6,5 +6,6 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-# from sandworks.lib import helpers  # nopep8
-# from sandworks.lib import sand_spline  # nopep8
+print(sys.path)
+from lib import helpers  # nopep8
+from lib import sand_spline  # nopep8
