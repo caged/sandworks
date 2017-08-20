@@ -2,5 +2,5 @@
 Sandworks generative artwork
 """
 
-from .lib import helpers
-from .lib import sand_spline
+from sadworks.lib import helpers
+from sandworks.lib import sand_spline
