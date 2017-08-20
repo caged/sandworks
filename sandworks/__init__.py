@@ -2,5 +2,8 @@
 Sandworks generative artwork
 """
 
-from lib import helpers
-from lib import sand_spline
+import sys
+sys.path.append('../')
+
+from sandworks.lib import helpers  # nopep8
+from sandworks.lib import sand_spline  # nopep8
